@@ -22,7 +22,7 @@ fun main(): Unit = runBlocking {
     val port = Config.serverPort
     val isHeroku = System.getenv("PORT") != null
     // Heroku requires binding to 0.0.0.0, local dev often uses 127.0.0.1
-    val host = if (isHeroku) "0.0.0.0" else "127.0.0.1"
+    val host = "0.0.0.0"
 
     log.info("Starting Spotify MCP Server (SSE mode), listening on $host:$port")
     log.info("Open http://$host:$port/login in your browser to authenticate with Spotify.")
