@@ -1,0 +1,16 @@
+<configuration>
+  <!-- All logs go to stderr so they don't corrupt the MCP stdio protocol on stdout -->
+  <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.err</target>
+    <encoder>
+      <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} -- %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="io.netty" level="WARN"/>
+  <logger name="io.ktor" level="INFO"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDERR"/>
+  </root>
+</configuration>
