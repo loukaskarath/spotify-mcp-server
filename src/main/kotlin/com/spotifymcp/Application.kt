@@ -59,6 +59,25 @@ fun main(): Unit = runBlocking {
                 buildMcpServer()
             }
 
+            // ─── Show current refresh token (for bootstrapping cloud deployments) ──
+            get("/token-info") {
+                if (!SpotifyAuth.isAuthenticated()) {
+                    call.respondText("Not authenticated. Visit /login first.", status = HttpStatusCode.Unauthorized)
+                    return@get
+                }
+                call.respondText(
+                    """
+                    <!DOCTYPE html><html><body style="font-family:sans-serif;padding:40px">
+                    <h2>Refresh Token</h2>
+                    <p>Copy this value and set it as the <code>SPOTIFY_REFRESH_TOKEN</code> environment variable in your deployment:</p>
+                    <pre style="background:#f0f0f0;padding:16px;word-break:break-all">${SpotifyAuth.getRefreshToken()}</pre>
+                    <p><strong>Keep this secret.</strong> It grants access to your Spotify account.</p>
+                    </body></html>
+                    """.trimIndent(),
+                    ContentType.Text.Html
+                )
+            }
+
             // ─── OAuth: Redirect user to Spotify login ────────────────────────
             get("/login") {
                 val authUrl = SpotifyAuth.buildAuthorizationUrl()

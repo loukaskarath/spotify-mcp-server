@@ -53,6 +53,14 @@ object SpotifyAuth {
 
     init {
         loadTokensFromDisk()
+        // On cloud deployments (ephemeral filesystem), bootstrap from env var if disk has nothing
+        if (refreshToken == null) {
+            val envRefreshToken = System.getenv("SPOTIFY_REFRESH_TOKEN")
+            if (envRefreshToken != null) {
+                refreshToken = envRefreshToken
+                log.info("Loaded refresh token from SPOTIFY_REFRESH_TOKEN environment variable.")
+            }
+        }
     }
 
     fun buildAuthorizationUrl(): String {
@@ -104,6 +112,8 @@ object SpotifyAuth {
     }
 
     fun isAuthenticated(): Boolean = refreshToken != null
+
+    fun getRefreshToken(): String? = refreshToken
 
     // ─── Token persistence ────────────────────────────────────────────────────
 
