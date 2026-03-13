@@ -13,5 +13,5 @@ object Config {
 
     val appHost: String = System.getenv("APP_HOST") ?: "http://localhost:$serverPort"
     
-    val redirectUri: String = System.getenv("SPOTIFY_REDIRECT_URI") ?: "$appHost"
+    val redirectUri: String = System.getenv("SPOTIFY_REDIRECT_URI") ?: "$appHost/callback"
 }
