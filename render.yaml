@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: spotify-mcp-server
+    env: java
+    buildCommand: ./gradlew build
+    startCommand: ./gradlew run
+    envVars:
+      - key: SPOTIFY_CLIENT_ID
+        sync: false
+      - key: SPOTIFY_CLIENT_SECRET
+        sync: false
+      - key: APP_HOST
+        sync: false
